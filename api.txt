@@ -1,0 +1,75 @@
+login user
+/login
+POST
+username, password
+
+---------- AUTH----------------
+POST /login
+data: username, password
+response:
+	200 OK
+		{ id, firstName, lastName, email}
+	401 Unauthorized
+		{}
+POST /logout invalidate session
+response: 
+	200 OK
+
+--- TASKS  ---------------------------------
+NAPOMENA: Za razliku od camundinog apija, formKey dobijamo kao /{formKey}.html
+GET /tasks/my-tasks
+data: {}
+response: 
+	200 OK
+		[{ id, name, description, assignee, processDefinitionId, formKey, createTime:Date }...]
+
+POST /tasks/{taskId}/claim
+data: {}
+response:
+	200 OK
+	403 Forbidden - task is already claimed
+	404 Not Found
+	
+POST /tasks/{taskId}/unclaim
+data: {}
+response:
+	200 OK
+	403 Forbidden - task is not user's claimed
+	404 Not Found
+
+DELETE: /tasks/{taskId}
+data: {}
+response:
+	200 OK
+	403 Forbidden - not allowed
+	404 Not Found
+
+--- FORMS ---------------------------
+GET /tasks/{taskId}/form-variables
+
+POST /tasks/{taskId}/submit-form
+data: { variables: { /* variables specific to form */ } }
+response:
+	200 OK
+	404 Not Found
+	
+--- PROCESS ---------
+POST /processes  Startovanje procesa diplomskog
+data: {}
+response:
+	200 OK
+
+DELETE /processes/{processInstanceId}  brisanje procesa diplomskog
+data: {}
+response:
+	200 OK
+
+
+/login
+/api/tasks
+		/myTasks - tasks for logged in user
+		/groupTasks - tasks for logged in user's groups
+		/{id}/form-variables - variables for task's form
+	
+	
+	

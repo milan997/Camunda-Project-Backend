@@ -1,0 +1,24 @@
+<process-application
+  xmlns="http://www.camunda.org/schema/1.0/ProcessApplication"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- A single deployment (process-archive) is declared. The process archive has the name 
+	loan-approval and is deployed to the process engine with the name default. 
+	Two additional properties are specified: -->
+<!--     isDeleteUponUndeploy: this property controls whether the undeployment of the 
+									process application should entail that the process engine deployment is deleted from the database. 
+									The default setting is false. If this property is set to true, undeployment of the process application 
+									leads to the removal of the deployment (including process instances) from the database. -->
+<!--     isScanForProcessDefinitions: if this property is set to true, the classpath of the
+								    process application is automatically scanned for deployable resources. Deployable resources
+									must end in .bpmn20.xml, .bpmn, .cmmn11.xml, .cmmn, .dmn11.xml or .dmn. -->
+	
+  <process-archive name="loan-approval">
+    <process-engine>default</process-engine>
+    <properties>
+      <property name="isDeleteUponUndeploy">false</property>
+      <property name="isScanForProcessDefinitions">true</property>
+    </properties>
+  </process-archive>
+
+</process-application>
