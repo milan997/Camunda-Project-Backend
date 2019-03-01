@@ -212,15 +212,15 @@ execution.setVariable("uslov", true);</bpmn:script>
     <bpmn:boundaryEvent id="BoundaryEvent_IstekVremena" name="Istek predvidjenog roka za izradu" attachedToRef="SubProcess_0yfkxb4">
       <bpmn:outgoing>SequenceFlow_1e76vc3</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration>P10D</bpmn:timeDuration>
+        <bpmn:timeDuration>${rokZaIzradu}</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="BoundaryEvent_17u9kw9" attachedToRef="SubProcess_0yfkxb4">
       <bpmn:outgoing>SequenceFlow_03lvexq</bpmn:outgoing>
       <bpmn:errorEventDefinition errorRef="Error_1js0391" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1e76vc3" sourceRef="BoundaryEvent_IstekVremena" targetRef="Task_18rvoms" />
-    <bpmn:userTask id="Task_18rvoms" name="Mentor razmatra produzenje roka" camunda:assignee="${mentor}">
+    <bpmn:sequenceFlow id="SequenceFlow_1e76vc3" sourceRef="BoundaryEvent_IstekVremena" targetRef="Task_MentorRazmatraProduzenjeRoka" />
+    <bpmn:userTask id="Task_MentorRazmatraProduzenjeRoka" name="Mentor razmatra produzenje roka" camunda:formKey="embedded:app:forms/Task07C.html" camunda:assignee="${mentor}">
       <bpmn:incoming>SequenceFlow_1e76vc3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0lvk7ln</bpmn:outgoing>
     </bpmn:userTask>
@@ -236,7 +236,7 @@ execution.setVariable("uslov", true);</bpmn:script>
       <bpmn:outgoing>SequenceFlow_19s7obo</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0w0kpw5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0lvk7ln" sourceRef="Task_18rvoms" targetRef="ExclusiveGateway_1t77055" />
+    <bpmn:sequenceFlow id="SequenceFlow_0lvk7ln" sourceRef="Task_MentorRazmatraProduzenjeRoka" targetRef="ExclusiveGateway_1t77055" />
     <bpmn:sequenceFlow id="SequenceFlow_19s7obo" name="produzenje roka nije odobreno" sourceRef="ExclusiveGateway_1t77055" targetRef="ExclusiveGateway_1meltzq">
       <bpmn:extensionElements>
         <camunda:executionListener class="com.sf0716.diplomski.handlers.SetMessageHandler" event="take">
@@ -247,7 +247,11 @@ execution.setVariable("uslov", true);</bpmn:script>
       </bpmn:extensionElements>
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${uslov==false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0w0kpw5" name="Mentor odobrio produzenje roka" sourceRef="ExclusiveGateway_1t77055" targetRef="ExclusiveGateway_0ge06vw" />
+    <bpmn:sequenceFlow id="SequenceFlow_0w0kpw5" name="Mentor odobrio produzenje roka" sourceRef="ExclusiveGateway_1t77055" targetRef="ExclusiveGateway_0ge06vw">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.sf0716.diplomski.handlers.ConvertTimeHandler" event="take" />
+      </bpmn:extensionElements>
+    </bpmn:sequenceFlow>
     <bpmn:subProcess id="SubProcess_1c4hk1g" name="Formiranje konacnog dokumenta (elaborata)">
       <bpmn:incoming>SequenceFlow_1dod0tk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0fgqk2q</bpmn:outgoing>
@@ -742,7 +746,7 @@ execution.setVariable("uslov", true);</bpmn:script>
         <di:waypoint x="1152" y="985" />
         <di:waypoint x="1152" y="945" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_09zwn32_di" bpmnElement="Task_18rvoms">
+      <bpmndi:BPMNShape id="UserTask_09zwn32_di" bpmnElement="Task_MentorRazmatraProduzenjeRoka">
         <dc:Bounds x="1102" y="865" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0ge06vw_di" bpmnElement="ExclusiveGateway_0ge06vw" isMarkerVisible="true">

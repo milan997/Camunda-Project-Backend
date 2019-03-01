@@ -35,6 +35,7 @@ public class StartProcessHandler implements ExecutionListener {
 		String userId = (String) execution.getVariable("student");
 		User user = identityService.createUserQuery().userId(userId).singleResult();
 		execution.setVariable("email",  user.getEmail());
+		
+		execution.setVariable("rokZaIzradu", "PT1M");
 	}
-	
 }

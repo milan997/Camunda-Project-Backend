@@ -30,6 +30,7 @@ public class SendMailHandler implements JavaDelegate {
 		mail.setFrom(from);
 		mail.setSubject(subject); 
 		mail.setText(text);
+		System.out.println("Sending mail to: " + to);
 		emailSender.send(mail);
 	}
 

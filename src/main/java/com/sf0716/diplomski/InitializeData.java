@@ -28,7 +28,7 @@ public class InitializeData {
 	 */
 	@EventListener(ApplicationReadyEvent.class)
 	public void onAppReady() {
-	    //deleteAllProcessInstances();
+	    deleteAllProcessInstances();
 	    clearDatabase();
 	    addData();
 	}
